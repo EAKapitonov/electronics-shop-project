@@ -19,3 +19,20 @@ def test_Item(name, price, quantity):
     assert product.calculate_total_price() == 300000
     product.apply_discount()
     assert product.price == 17000
+
+def test_instantiate_from_csv():
+    """тестируем instantiate_from_csv()"""
+    Item.instantiate_from_csv()
+    assert Item.all[1].price == 100
+
+def test_string_to_number():
+    """тестируем string_to_number()"""
+    assert Item.string_to_number('7') == 7
+    assert Item.string_to_number('7.2') == 7
+    assert Item.string_to_number('8.87') == 8
+
+def test_name():
+    """тестируем name сеттер"""
+    assert Item.all[1].name == "Смартфон"
+    Item.all[1].name = "Телефон"
+    assert Item.all[1].name == "Телефон"
