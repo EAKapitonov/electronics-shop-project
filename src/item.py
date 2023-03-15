@@ -43,9 +43,9 @@ class Item:
             return "Длина наименования товара превышает 10 символов"
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls, url_file='../src/items.csv'):
         """ класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv"""
-        with open('../src/items.csv', newline='') as csvfile:
+        with open(url_file, newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for i in reader:
                 Item(i["name"], int(i["price"]), int(i["quantity"]))

@@ -22,7 +22,7 @@ def test_Item(name, price, quantity):
 
 def test_instantiate_from_csv():
     """тестируем instantiate_from_csv()"""
-    Item.instantiate_from_csv()
+    Item.instantiate_from_csv("src/items.csv")
     assert Item.all[1].price == 100
 
 def test_name():
