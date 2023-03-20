@@ -1,11 +1,14 @@
 import csv
+
+
 class Item:
     """
     Класс для представления товара в магазине.
     """
     pay_rate = 1.0
     all = []
-    def __init__(self, name:str, price:float, quantity:int) -> None:
+
+    def __init__(self, name: str, price: float, quantity: int) -> None:
         """
         Создание экземпляра класса item.
         :param name: Название товара.
@@ -16,6 +19,12 @@ class Item:
         self.price = price
         self.quantity = quantity
         Item.all.append(self)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return self.__name
 
     def calculate_total_price(self) -> float:
         """
@@ -49,9 +58,9 @@ class Item:
             reader = csv.DictReader(csvfile)
             for i in reader:
                 Item(i["name"], int(i["price"]), int(i["quantity"]))
+
     @staticmethod
     def string_to_number(string: str):
         """статический метод, возвращающий число из числа-строки"""
         float_str = float(string)
         return int(float_str)
-
