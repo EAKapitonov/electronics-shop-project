@@ -37,8 +37,6 @@ def test_string_to_number():
     assert Item.string_to_number('7.2') == 7
     assert Item.string_to_number('8.87') == 8
 
-def test_repr():
-    """тестируем __repr__"""
 
 def test_str():
     """тестируем __str__"""
