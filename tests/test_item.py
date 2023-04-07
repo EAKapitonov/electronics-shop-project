@@ -1,4 +1,4 @@
-from src.item import Item
+from src.item import Item, InstantiateCSVError
 import pytest
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 @pytest.fixture
@@ -24,6 +24,13 @@ def test_instantiate_from_csv():
     """тестируем instantiate_from_csv()"""
     Item.instantiate_from_csv("src/items.csv")
     assert Item.all[1].price == 100
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv("src/items2.csv")
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv("src/items3.csv")
+    assert Item.instantiate_from_csv("src/items4.csv") == "не допустимое значение параметров товара"
+    assert Item.instantiate_from_csv("src/items5.csv") == "_Отсутствует файл item.csv_"
+
 
 def test_name():
     """тестируем name сеттер"""

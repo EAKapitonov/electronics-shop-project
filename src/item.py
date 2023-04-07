@@ -1,6 +1,17 @@
 import csv
 
 
+class InstantiateCSVError(Exception):
+    """
+    Класс для исключений ошибок csv файла
+    """
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else 'Файл item.csv поврежден'
+
+    def __str__(self):
+        return self.message
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -62,10 +73,22 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls, url_file='../src/items.csv'):
         """ класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv"""
-        with open(url_file, newline='') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for i in reader:
-                Item(i["name"], int(i["price"]), int(i["quantity"]))
+        try:
+            with open(url_file, newline='') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for i in reader:
+                    if "name" not in i.keys() or "price" not in i.keys() or "quantity" not in i.keys() :
+                        raise InstantiateCSVError('Файл item.csv поврежден')
+                    elif not i['name'] or not i['price'] or not i['quantity']:
+                        raise InstantiateCSVError('Файл item.csv поврежден')
+                    else:
+                        Item(i["name"], int(i["price"]), int(i["quantity"]))
+        except FileNotFoundError:
+            print("_Отсутствует файл item.csv_")
+            return "_Отсутствует файл item.csv_"
+        except ValueError:
+            print("не допустимое значение параметров товара")
+            return "не допустимое значение параметров товара"
 
     @staticmethod
     def string_to_number(string: str):
